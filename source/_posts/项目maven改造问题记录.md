@@ -1,7 +1,7 @@
 ---
 title: 项目maven改造问题记录
 date: 2016-08-17 17:48:38
-tags: maven
+tags: [maven]
 ---
 
 以下是记录maven改造过程中的一些问题，以及处理问题的思路。
