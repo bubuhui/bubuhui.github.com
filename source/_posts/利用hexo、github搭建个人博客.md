@@ -2,6 +2,7 @@
 title: 利用hexo、github搭建个人博客
 date: 2016-08-17 23:18:09
 tags: [hexo,github]
+archives: [hexo使用]
 ---
 
 ### 一些必要软件安装
