@@ -60,8 +60,8 @@ menu_icons:
 
 # Schemes
 #scheme: Muse
-scheme: Mist
-#scheme: Pisces
+#scheme: Mist
+scheme: Pisces
 
 
 # ---------------------------------------------------------------
@@ -278,8 +278,8 @@ mathjax:
 duoshuo_info:
   ua_enable: true
   admin_enable: false
-  user_id: 0
-  #admin_nickname: Author
+  user_id: 
+  admin_nickname: 
 
 
 # Facebook SDK Support.

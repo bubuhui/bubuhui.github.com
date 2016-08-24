@@ -31,5 +31,39 @@ git简单入门地址：[廖雪峰git教程](http://www.liaoxuefeng.com/wiki/001
 
 git下载地址：[win下载](https://git-scm.com/download/win)
 
-#### 安装hexo
+#### [安装hexo](https://hexo.io/zh-cn/docs/)
 
+```shell
+### 安装hexo
+npm install -g hexo-cli
+### 初始化blog
+hexo init <folder>
+cd <folder>
+npm install
+### 生成静态文件
+hexo g
+### 启动服务
+hexo s
+```
+
+安装hexo插件，或者hexo 2.x 升级 3.x可以参考 [Migrating from 2.x to 3.0](https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0)
+
+#### Github Pages设置
+
+参考这篇博文就可以了，写得太详细了。[如何利用GitHub Pages和Hexo快速搭建个人博客](http://sunwhut.com/2015/10/30/buildBlog/)
+
+**重要提示：**我用的hexo3，这篇文章还是hexo2，_config.yml 需要修改为下面的:
+
+```properties
+deploy:
+  type: git
+  repo: 你的github地址，如果你设置了ssh，可以使用ssh地址
+  branch: master
+  message: hexo deploy
+```
+
+
+
+#### 结束语
+
+自己写果然还是很费劲，这里基本上都在偷懒，从网上copy来的教程。
