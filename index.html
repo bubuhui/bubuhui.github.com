@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion">
+<html class="theme-next pisces use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -96,12 +96,12 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Mist',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 0,
+      userId: undefined,
       author: '博主'
     }
   };
@@ -255,6 +255,617 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/24/从dubbo注册服务，找不到方法谈dubbo如何注册服务及方法列表/" itemprop="url">
+                  从dubbo注册服务，找不到方法谈dubbo如何注册服务及方法列表
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-24T22:56:08+08:00" content="2016-08-24">
+              2016-08-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/dubbo研究/" itemprop="url" rel="index">
+                    <span itemprop="name">dubbo研究</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h4><ul>
+<li>​    某一天，同事发现他某一个接口注册的dubbo服务，没有方法列表，方法列表是一个*，其他dubbo服务都是正常的。具体情况如下：</li>
+</ul>
+<ul>
+<li>该接口是父类接口，下面有子类接口，子类接口注册的dubbo服务均可以获取方法列表。</li>
+<li><strong>该接口打包到jar中就找不到方法列表，解压到class下面就可以。</strong></li>
+<li>该接口有100个方法。</li>
+</ul>
+<h4 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h4><p>​    经验丰富的朋友们看到上面的问题描述大概可以猜测到原因了。我这边在排查的时候一下子就把关键地方给忽略过去了。</p>
+<ul>
+<li>由于问题产生的现象是打包到jar中才出现的，因此考虑打包的原因，排查打包的jdk版本信息，所有都替换成一致之后，问题仍未解决。</li>
+<li>考虑到该接口作为父类接口使用，怀疑是不是父类接口的原因，重新写了几个测试用例，包括父类接口，子接口，无子类接口几种情况，发现所有接口列表都是正常的，证明继承关系不影响接口的方法列表。</li>
+<li>考虑到该接口方法较多，有100个，测试例子中，写了1000个方法，仍然正常获取到方法列表。</li>
+<li>copy了一份该接口，接口实现类，重新注册了一个dubbo服务，发现一切正常。</li>
+<li>考虑是不是有相同的接口（包路径，类名都相同）覆盖掉了该接口。在IDE下搜索，果然发现了一个空的相同接口。</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>​    由于另外一个相同接口是在jar里面，而class目录下面的class会优先搜索加载（<strong>这里需要去看一下class、jar的加载机制及时机</strong>），导致解压出来后就没问题，而打成jar包就有问题。至于为什么开始没考虑到相同的接口覆盖，这个有两个原因：</p>
+<ul>
+<li>自身理解得不够深刻，这么明显和class加载顺序有关的问题，没有第一时间反应过来。</li>
+<li>开始在IDE下使用 CTRL+T 和 CTRL + R 搜索过，嫌弃CTRL + T 太慢，应该是还没看全就 CTRL +R 切换过去了。</li>
+<li>开始也想过从dubbo注册服务时候调试，不过没有研究过dubbo代码，一时不好下手，就放弃了。如果当时知道dubbo注册机制，就可以直接找到问题了。</li>
+</ul>
+<h4 id="dubbo如何注册服务？"><a href="#dubbo如何注册服务？" class="headerlink" title="dubbo如何注册服务？"></a>dubbo如何注册服务？</h4><p>​    这里先暂时留着，有时间再接着写。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/24/maven-MyBatis-Generator-自动生成代码配置/" itemprop="url">
+                  maven + MyBatis Generator 自动生成代码配置
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-24T22:10:52+08:00" content="2016-08-24">
+              2016-08-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mybatis/" itemprop="url" rel="index">
+                    <span itemprop="name">mybatis</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在搭建新项目，用到mybatis，记录一下maven+mybatis generator生成代码配置的过程，作备忘用。参考网站:<a href="http://mybatis.github.io/generator/index.html" target="_blank" rel="external">mybatis generator</a></p>
+<p>pom文件配置，主要是引入mybatis-generator-maven-plugin插件。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"</span>&gt;</div><div class="line">	<span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.test.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aliexpress-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">packaging</span>&gt;</span>war<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>test-server Maven Webapp<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.apache.org<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-webmvc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;junit.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">build</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">finalName</span>&gt;</span>test-maven<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">resource</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">filtering</span>&gt;</span>true<span class="tag">&lt;/<span class="name">filtering</span>&gt;</span></div><div class="line">			<span class="tag">&lt;/<span class="name">resource</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">			<span class="comment">&lt;!-- mybatis 代码生成插件 --&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.generator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-generator-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">					<span class="tag">&lt;<span class="name">overwrite</span>&gt;</span>true<span class="tag">&lt;/<span class="name">overwrite</span>&gt;</span></div><div class="line">					<span class="tag">&lt;<span class="name">configurationFile</span>&gt;</span>$&#123;project.basedir&#125;/src/test/resources/MyBatis_Generator_Config.xml<span class="tag">&lt;/<span class="name">configurationFile</span>&gt;</span></div><div class="line">				<span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">			<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-war-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">					<span class="tag">&lt;<span class="name">classifier</span>&gt;</span>$&#123;project.classifier&#125;<span class="tag">&lt;/<span class="name">classifier</span>&gt;</span></div><div class="line">					<span class="tag">&lt;<span class="name">webResources</span>&gt;</span></div><div class="line">						<span class="tag">&lt;<span class="name">resource</span>&gt;</span></div><div class="line">							<span class="tag">&lt;<span class="name">filtering</span>&gt;</span>true<span class="tag">&lt;/<span class="name">filtering</span>&gt;</span></div><div class="line">							<span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/webapp<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">						<span class="tag">&lt;/<span class="name">resource</span>&gt;</span></div><div class="line">					<span class="tag">&lt;/<span class="name">webResources</span>&gt;</span></div><div class="line">				<span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">			<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">build</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>配置MyBatis_Generator_Config.xml文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE generatorConfiguration</span></div><div class="line">	  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"</div><div class="line">	  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">generatorConfiguration</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!-- 使用方法:</span></div><div class="line">       1.配置 properties.</div><div class="line">       2.配置数据库驱动位置.</div><div class="line">       3.配置需要反向生成代码的表.</div><div class="line">       4.配置完成后,在项目目录test-maven下运行：mvn mybatis-generator:generate</div><div class="line">       5.生成的代码在：target/generated-sources/mybatis-generator目录下.</div><div class="line">     --&gt;</div><div class="line">    <span class="comment">&lt;!-- 1.指定配置文件路径，在这里我们使用绝对路径，如果使用properties的resource属性，需要设置classpath --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">properties</span>  <span class="attr">url</span>=<span class="string">"file:///G:/eclipse/workspace/test-maven/src/test/resources/init.properties"</span>/&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 2.指定数据库驱动jar的位置，同上，使用绝对路径  --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">classPathEntry</span> <span class="attr">location</span>=<span class="string">"D:/maven_repository/.m2/repository/mysql/mysql-connector-java/5.1.15/mysql-connector-java-5.1.15.jar"</span> /&gt;</span></div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">context</span> <span class="attr">id</span>=<span class="string">"mybatis"</span> <span class="attr">targetRuntime</span>=<span class="string">"MyBatis3"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">jdbcConnection</span> <span class="attr">driverClass</span>=<span class="string">"$&#123;jdbc_driver&#125;"</span></span></div><div class="line">			<span class="attr">connectionURL</span>=<span class="string">"$&#123;jdbc_url&#125;"</span></div><div class="line">			<span class="attr">userId</span>=<span class="string">"$&#123;jdbc_user&#125;"</span></div><div class="line">			<span class="attr">password</span>=<span class="string">"$&#123;jdbc_password&#125;"</span>&gt;</div><div class="line">		<span class="tag">&lt;/<span class="name">jdbcConnection</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">javaTypeResolver</span> &gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"forceBigDecimals"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">javaTypeResolver</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">javaModelGenerator</span> <span class="attr">targetPackage</span>=<span class="string">"test.model"</span> <span class="attr">targetProject</span>=<span class="string">"MAVEN"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"enableSubPackages"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"trimStrings"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">javaModelGenerator</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">sqlMapGenerator</span> <span class="attr">targetPackage</span>=<span class="string">"mapper"</span>  <span class="attr">targetProject</span>=<span class="string">"MAVEN"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"enableSubPackages"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">sqlMapGenerator</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">javaClientGenerator</span> <span class="attr">type</span>=<span class="string">"XMLMAPPER"</span> <span class="attr">targetPackage</span>=<span class="string">"test.dao"</span>  <span class="attr">targetProject</span>=<span class="string">"MAVEN"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"enableSubPackages"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">javaClientGenerator</span>&gt;</span></div><div class="line">		</div><div class="line">		<span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">"test_maven"</span> <span class="attr">domainObjectName</span>=<span class="string">"TestMaven"</span> <span class="attr">enableSelectByExample</span>=<span class="string">"false"</span> <span class="attr">enableDeleteByExample</span>=<span class="string">"false"</span></span></div><div class="line">            <span class="attr">enableCountByExample</span>=<span class="string">"false"</span> <span class="attr">enableUpdateByExample</span>=<span class="string">"false"</span> /&gt;</div><div class="line"></div><div class="line">	<span class="tag">&lt;/<span class="name">context</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">generatorConfiguration</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>配置init.properties，这个步骤其实可以省略，在MyBatis_Generator_Config.xml里面直接配置即可，注意参数的转义符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#Mybatis Generator configuration</div><div class="line">jdbc_driver = com.mysql.jdbc.Driver</div><div class="line">jdbc_url=jdbc\:mysql\://127.0.0.1:3306/test_maven?useUnicode\=true&amp;characterEncoding\=utf8&amp;autoReconnect\=true&amp;zeroDateTimeBehavior\=convertToNull&amp;transformedBitIsBoolean\=true</div><div class="line">jdbc_user=root</div><div class="line">jdbc_password=root</div></pre></td></tr></table></figure>
+<p>最后在命令行进入项目目录，执行<code>mvn mybatis-generator:generate</code>，查看输出结果即可。执行mvn命令如果有报错，先加上-X参数看看报错异常情况，然后根据问题检查配置，如果配置无问题，还报错，有可能是注释问题，去掉注释试试，之前碰到过一次，没记录下来报错详细情况，去掉注释后正常使用。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/24/64位-windows下注册nginx、tomcat、mysql为服务/" itemprop="url">
+                  64位 windows下注册nginx、tomcat、mysql为服务
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-24T21:18:08+08:00" content="2016-08-24">
+              2016-08-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/windows软件使用/" itemprop="url" rel="index">
+                    <span itemprop="name">windows软件使用</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="注册解压版tomcat为服务，下面是摘录网上的2个例子。"><a href="#注册解压版tomcat为服务，下面是摘录网上的2个例子。" class="headerlink" title="注册解压版tomcat为服务，下面是摘录网上的2个例子。"></a>注册解压版tomcat为服务，下面是摘录网上的2个例子。</h3><ol>
+<li><a href="http://www.cnblogs.com/samcn/archive/2011/02/18/1957599.html" target="_blank" rel="external">windows下将解压缩版的tomcat设置为自动运行的系统服务</a></li>
+<li><a href="http://jingyan.baidu.com/article/b2c186c89f5127c46ef6ff08.html" target="_blank" rel="external">在windows下如何将Tomcat设置为自动启动的服务</a></li>
+</ol>
+<p>附注第一个例子使用方法：</p>
+<ol>
+<li>在DOS窗口中进入到tomcat的解压目录下，在进入到bin目录；</li>
+<li>运行 service install tomcat就安装了tomcat服务，该命令就是运行了bin目录下的service.bat脚本，tomcat是服务的名称；</li>
+<li>第二步只是安装了服务，并没有设置服务为开机启动，这里要设置一下，在命令行中输入：sc config tomcat start= auto，start= 和auto之间要有空格。</li>
+<li>为tomcat 添加依赖服务：sc config “tomcat” depend= “MySql”</li>
+</ol>
+<h3 id="注册mysql为service服务"><a href="#注册mysql为service服务" class="headerlink" title="注册mysql为service服务"></a>注册mysql为service服务</h3><p>使用管理员权限安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld install MySQL --defaults-file=&quot;D:\program files\mysql\bin\my.ini&quot;</div></pre></td></tr></table></figure>
+<h3 id="注册nginx为service服务"><a href="#注册nginx为service服务" class="headerlink" title="注册nginx为service服务"></a>注册nginx为service服务</h3><p>下面介绍几种方法</p>
+<ol>
+<li><p>使用winsw，网上也有很多例子，例如 <a href="http://www.cnblogs.com/JayK/p/3429795.html" target="_blank" rel="external">nginx创建windows服务自启动</a>，我的电脑是64位，win7，按照这种方法启动始终报1067这个错误。</p>
+</li>
+<li><p>使用srvany.exe，这几个未测试过，具体例子如下：</p>
+<p><a href="http://www.xiaojian.org/article/432.html" target="_blank" rel="external">Windows下Nginx以服务的方式运行</a></p>
+<p><a href="http://www.iflym.com/index.php/computer-use/201205020001.html" target="_blank" rel="external">在64位windows下使用instsrv.exe和srvany.exe创建windows服务</a></p>
+<p><a href="http://www.cnblogs.com/codealone/p/3156943.html" target="_blank" rel="external">使用srvany.exe把程序安装成windows服务</a></p>
+</li>
+<li><p>由于上面的方法，在64位电脑上面没成功，</p>
+<p>于是找到<a href="https://github.com/kohsuke/winsw" target="_blank" rel="external">winsw</a>项目首页，下载最新的winsw，按照官网配置，只保留了启动配置，结果可以正常启动。附配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">service</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">id</span>&gt;</span>nginx<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>nginx<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>This service runs nginx continuous integration system.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">executable</span>&gt;</span>d:/nginx/nginx.exe<span class="tag">&lt;/<span class="name">executable</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/24/intellij-idea-插件备忘/" itemprop="url">
+                  intellij idea 插件备忘
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-24T21:13:06+08:00" content="2016-08-24">
+              2016-08-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/intellij-idea使用/" itemprop="url" rel="index">
+                    <span itemprop="name">intellij idea使用</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="intellij-idea-常用插件备忘"><a href="#intellij-idea-常用插件备忘" class="headerlink" title="intellij idea 常用插件备忘"></a>intellij idea 常用插件备忘</h3><ul>
+<li><p>idea vim   同linux vi编辑器</p>
+</li>
+<li><p>Key Promoter   快捷键提示插件，可以提示快捷键和使用频率</p>
+</li>
+<li><p>unitTest 在指定的方法上按下shift + cmd + t 即可为这个方法生成单元测试代码模板。</p>
+</li>
+<li><p>Mybatis 插件</p>
+<p>​</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/24/slf4j冲突问题解决/" itemprop="url">
+                  slf4j冲突问题解决
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-24T16:07:22+08:00" content="2016-08-24">
+              2016-08-24
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/17/利用hexo、github搭建个人博客/" itemprop="url">
                   利用hexo、github搭建个人博客
                 </a>
@@ -326,7 +937,13 @@
 <p><a href="http://www.runoob.com/nodejs/nodejs-install-setup.html" target="_blank" rel="external">安装方法</a></p>
 <h4 id="git安装"><a href="#git安装" class="headerlink" title="git安装"></a>git安装</h4><p>git简单入门地址：<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">廖雪峰git教程</a>，<a href="http://www.runoob.com/git/git-install-setup.html" target="_blank" rel="external">runoob教程</a></p>
 <p>git下载地址：<a href="https://git-scm.com/download/win" target="_blank" rel="external">win下载</a></p>
-<h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h4>
+<h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">安装hexo</a></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">### 安装hexo</div><div class="line">npm install -g hexo-cli</div><div class="line">### 初始化blog</div><div class="line">hexo init &lt;folder&gt;</div><div class="line">cd &lt;folder&gt;</div><div class="line">npm install</div><div class="line">### 生成静态文件</div><div class="line">hexo g</div><div class="line">### 启动服务</div><div class="line">hexo s</div></pre></td></tr></table></figure>
+<p>安装hexo插件，或者hexo 2.x 升级 3.x可以参考 <a href="https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0" target="_blank" rel="external">Migrating from 2.x to 3.0</a></p>
+<h4 id="Github-Pages设置"><a href="#Github-Pages设置" class="headerlink" title="Github Pages设置"></a>Github Pages设置</h4><p>参考这篇博文就可以了，写得太详细了。<a href="http://sunwhut.com/2015/10/30/buildBlog/" target="_blank" rel="external">如何利用GitHub Pages和Hexo快速搭建个人博客</a></p>
+<p><strong>重要提示：</strong>我用的hexo3，这篇文章还是hexo2，_config.yml 需要修改为下面的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: 你的github地址，如果你设置了ssh，可以使用ssh地址</div><div class="line">  branch: master</div><div class="line">  message: hexo deploy</div></pre></td></tr></table></figure>
+<h4 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h4><p>自己写果然还是很费劲，这里基本上都在偷懒，从网上copy来的教程。</p>
+
           
         
       
@@ -395,6 +1012,25 @@
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/maven改造/" itemprop="url" rel="index">
+                    <span itemprop="name">maven改造</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -425,6 +1061,8 @@
 <h4 id="jdk版本问题"><a href="#jdk版本问题" class="headerlink" title="jdk版本问题"></a>jdk版本问题</h4><p>这个提示表示当前编译jdk版本低于某些jar里面提供的jdk版本。具体定位问题，要结合上下文来看，例如下面的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">错误：服务配置文件不正确，或构造处理程序对象 javax.annotation.processing.Processor: Provider org.eclipse.sisu.space.SisuIndexAPT6 could not be instantiated: java.lang.UnsupportedClassVersionError: javax/inject/Named : Unsupported major.minor version 51.0 时抛出异常</div></pre></td></tr></table></figure>
 <p>这个地方问题出在 <code>javax.annotation.processing.Processor: Provider org.eclipse.sisu.space.SisuIndexAPT6 could not be instantiated</code> 这一句，<code>SisuIndexAPT6</code> 不能倍实例化，找到具体class对应jar，过滤依赖或者升级jdk来处理。</p>
+<h4 id="clipse-A-cycle-was-detected-in-the-build-path-of-project-XXX-Build-Path-Problem"><a href="#clipse-A-cycle-was-detected-in-the-build-path-of-project-XXX-Build-Path-Problem" class="headerlink" title="clipse A cycle was detected in the build path of project XXX Build Path Problem"></a>clipse A cycle was detected in the build path of project XXX Build Path Problem</h4><p>出现这个情况，表示项目中有循环依赖，这个提示里面的xxx表示循环依赖的项目，尝试在每个包里面排除掉循环依赖关系，发现eclipse里面还是有红色的感叹号，这种情况下，只能选择手动调整编译器报错选项了，具体方法就是把循环依赖编译选项由error调整为warning，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Windows -&gt; Preferences -&gt; Java-&gt; Compiler -&gt; Building -&gt; Circular Dependencies</div></pre></td></tr></table></figure>
 
           
         
@@ -608,7 +1246,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -616,7 +1254,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -625,7 +1263,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -676,7 +1314,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT.Pisces
   </a>
 </div>
 
@@ -741,6 +1379,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
 
   
 

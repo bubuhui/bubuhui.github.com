@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion">
+<html class="theme-next pisces use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -104,7 +104,7 @@ nodejs下载
 安装方法
 git安装git简单入门地址：廖雪峰git教程，runoob教程
 git下载地址：">
-<meta property="og:updated_time" content="2016-08-18T05:37:56.688Z">
+<meta property="og:updated_time" content="2016-08-25T10:42:44.023Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用hexo、github搭建个人博客">
 <meta name="twitter:description" content="一些必要软件安装
@@ -121,12 +121,12 @@ git下载地址：">
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Mist',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 0,
+      userId: undefined,
       author: '博主'
     }
   };
@@ -344,7 +344,13 @@ git下载地址：">
 <p><a href="http://www.runoob.com/nodejs/nodejs-install-setup.html" target="_blank" rel="external">安装方法</a></p>
 <h4 id="git安装"><a href="#git安装" class="headerlink" title="git安装"></a>git安装</h4><p>git简单入门地址：<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">廖雪峰git教程</a>，<a href="http://www.runoob.com/git/git-install-setup.html" target="_blank" rel="external">runoob教程</a></p>
 <p>git下载地址：<a href="https://git-scm.com/download/win" target="_blank" rel="external">win下载</a></p>
-<h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h4>
+<h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">安装hexo</a></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">### 安装hexo</div><div class="line">npm install -g hexo-cli</div><div class="line">### 初始化blog</div><div class="line">hexo init &lt;folder&gt;</div><div class="line">cd &lt;folder&gt;</div><div class="line">npm install</div><div class="line">### 生成静态文件</div><div class="line">hexo g</div><div class="line">### 启动服务</div><div class="line">hexo s</div></pre></td></tr></table></figure>
+<p>安装hexo插件，或者hexo 2.x 升级 3.x可以参考 <a href="https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0" target="_blank" rel="external">Migrating from 2.x to 3.0</a></p>
+<h4 id="Github-Pages设置"><a href="#Github-Pages设置" class="headerlink" title="Github Pages设置"></a>Github Pages设置</h4><p>参考这篇博文就可以了，写得太详细了。<a href="http://sunwhut.com/2015/10/30/buildBlog/" target="_blank" rel="external">如何利用GitHub Pages和Hexo快速搭建个人博客</a></p>
+<p><strong>重要提示：</strong>我用的hexo3，这篇文章还是hexo2，_config.yml 需要修改为下面的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: 你的github地址，如果你设置了ssh，可以使用ssh地址</div><div class="line">  branch: master</div><div class="line">  message: hexo deploy</div></pre></td></tr></table></figure>
+<h4 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h4><p>自己写果然还是很费劲，这里基本上都在偷懒，从网上copy来的教程。</p>
+
       
     </div>
 
@@ -384,6 +390,10 @@ git下载地址：">
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/24/slf4j冲突问题解决/" rel="prev" title="slf4j冲突问题解决">
+                slf4j冲突问题解决 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -451,7 +461,7 @@ git下载地址：">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -459,7 +469,7 @@ git下载地址：">
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -468,7 +478,7 @@ git下载地址：">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -497,7 +507,7 @@ git下载地址：">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些必要软件安装"><span class="nav-number">1.</span> <span class="nav-text">一些必要软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#node安装"><span class="nav-number">1.1.</span> <span class="nav-text">node安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git安装"><span class="nav-number">1.2.</span> <span class="nav-text">git安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装hexo"><span class="nav-number">1.3.</span> <span class="nav-text">安装hexo</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些必要软件安装"><span class="nav-number">1.</span> <span class="nav-text">一些必要软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#node安装"><span class="nav-number">1.1.</span> <span class="nav-text">node安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git安装"><span class="nav-number">1.2.</span> <span class="nav-text">git安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装hexo"><span class="nav-number">1.3.</span> <span class="nav-text">安装hexo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Github-Pages设置"><span class="nav-number">1.4.</span> <span class="nav-text">Github Pages设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结束语"><span class="nav-number">1.5.</span> <span class="nav-text">结束语</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
@@ -530,7 +540,7 @@ git下载地址：">
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT.Pisces
   </a>
 </div>
 
@@ -595,6 +605,13 @@ git下载地址：">
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>

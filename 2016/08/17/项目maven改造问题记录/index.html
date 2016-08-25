@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion">
+<html class="theme-next pisces use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -98,7 +98,7 @@ jdk版本问题这个提示表示当前编译jdk版本低于某些jar里面提�
 1Unsupported major.minor version 51.0 时抛出异常
 jdk版本问题这个提示表示当前编译jdk版本低于某些jar里面提供的jdk版本。具体定位问题，要结合上下文来看，例如下面的：
 1错误：服务配置文件不正确，或构造处理程序对象 javax.annotation.processing.Processo">
-<meta property="og:updated_time" content="2016-08-18T03:57:27.315Z">
+<meta property="og:updated_time" content="2016-08-20T03:43:32.503Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目maven改造问题记录">
 <meta name="twitter:description" content="以下是记录maven改造过程中的一些问题，以及处理问题的思路。
@@ -112,12 +112,12 @@ jdk版本问题这个提示表示当前编译jdk版本低于某些jar里面提�
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Mist',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 0,
+      userId: undefined,
       author: '博主'
     }
   };
@@ -286,6 +286,25 @@ jdk版本问题这个提示表示当前编译jdk版本低于某些jar里面提�
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/maven改造/" itemprop="url" rel="index">
+                    <span itemprop="name">maven改造</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -314,6 +333,8 @@ jdk版本问题这个提示表示当前编译jdk版本低于某些jar里面提�
 <h4 id="jdk版本问题"><a href="#jdk版本问题" class="headerlink" title="jdk版本问题"></a>jdk版本问题</h4><p>这个提示表示当前编译jdk版本低于某些jar里面提供的jdk版本。具体定位问题，要结合上下文来看，例如下面的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">错误：服务配置文件不正确，或构造处理程序对象 javax.annotation.processing.Processor: Provider org.eclipse.sisu.space.SisuIndexAPT6 could not be instantiated: java.lang.UnsupportedClassVersionError: javax/inject/Named : Unsupported major.minor version 51.0 时抛出异常</div></pre></td></tr></table></figure>
 <p>这个地方问题出在 <code>javax.annotation.processing.Processor: Provider org.eclipse.sisu.space.SisuIndexAPT6 could not be instantiated</code> 这一句，<code>SisuIndexAPT6</code> 不能倍实例化，找到具体class对应jar，过滤依赖或者升级jdk来处理。</p>
+<h4 id="clipse-A-cycle-was-detected-in-the-build-path-of-project-XXX-Build-Path-Problem"><a href="#clipse-A-cycle-was-detected-in-the-build-path-of-project-XXX-Build-Path-Problem" class="headerlink" title="clipse A cycle was detected in the build path of project XXX Build Path Problem"></a>clipse A cycle was detected in the build path of project XXX Build Path Problem</h4><p>出现这个情况，表示项目中有循环依赖，这个提示里面的xxx表示循环依赖的项目，尝试在每个包里面排除掉循环依赖关系，发现eclipse里面还是有红色的感叹号，这种情况下，只能选择手动调整编译器报错选项了，具体方法就是把循环依赖编译选项由error调整为warning，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Windows -&gt; Preferences -&gt; Java-&gt; Compiler -&gt; Building -&gt; Circular Dependencies</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -423,7 +444,7 @@ jdk版本问题这个提示表示当前编译jdk版本低于某些jar里面提�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -431,7 +452,7 @@ jdk版本问题这个提示表示当前编译jdk版本低于某些jar里面提�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -440,7 +461,7 @@ jdk版本问题这个提示表示当前编译jdk版本低于某些jar里面提�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -469,7 +490,7 @@ jdk版本问题这个提示表示当前编译jdk版本低于某些jar里面提�
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk版本问题"><span class="nav-number">1.</span> <span class="nav-text">jdk版本问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#jdk版本问题"><span class="nav-number">1.</span> <span class="nav-text">jdk版本问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clipse-A-cycle-was-detected-in-the-build-path-of-project-XXX-Build-Path-Problem"><span class="nav-number">2.</span> <span class="nav-text">clipse A cycle was detected in the build path of project XXX Build Path Problem</span></a></li></ol></div>
             
           </div>
         </section>
@@ -502,7 +523,7 @@ jdk版本问题这个提示表示当前编译jdk版本低于某些jar里面提�
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT.Pisces
   </a>
 </div>
 
@@ -567,6 +588,13 @@ jdk版本问题这个提示表示当前编译jdk版本低于某些jar里面提�
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
